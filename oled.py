@@ -178,7 +178,7 @@ def display_static_logo(duration=5):
 # Continuously update the display every 2 seconds
 update_timer = 0
 
-display_rotating_logo()
+display_static_logo()
 
 while True:
     if update_timer == 5: # Change to whats needed
