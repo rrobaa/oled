@@ -124,9 +124,9 @@ device_thread.start()
 
 def network_display():
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
-    draw.text((0, 0), f"WAN: Internet {device_statuses['WAN']}", font=font_others, fill=255)
-    draw.text((0, 12), f"Router: {device_statuses['Router']}", font=font_others, fill=255)
-    draw.text((0, 24), f"Switch: {device_statuses['Switch']}", font=font_others, fill=255)
+    draw.text((0, 0), f"WAN: Internet {device_statuses['WAN']}", font=font_ip, fill=255)
+    draw.text((0, 12), f"R01: {device_statuses['Router']}", font=font_others, fill=255)
+    draw.text((0, 24), f"SW01: {device_statuses['Switch']}", font=font_others, fill=255)
     draw.text((0, 36), f"AP01: {device_statuses['AP01']}", font=font_others, fill=255)
     draw.text((0, 48), f"AP02: {device_statuses['AP02']}", font=font_others, fill=255)
 
