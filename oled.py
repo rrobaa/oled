@@ -151,7 +151,7 @@ def network_display():
 
 # TEST FOR SPINNING RPI LOGO ON STARTUP
 def display_rotating_logo(duration=10):
-    logo = Image.open('rpi-logo.png')  # Replace with your logo file path
+    logo = Image.open('rpi-logo.png').convert('1')   # Replace with your logo file path
     num_frames = 50
     rotation_angle = 360 // num_frames
 
