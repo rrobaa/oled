@@ -70,7 +70,7 @@ def update_display():
     draw.text((0, 18), f"CPU:".ljust(7) + f"{cpu_usage}%", font=font_others, fill=255)
     draw.text((0, 30), f"Temp:".ljust(7) + f"{get_cpu_temperature()} °C", font=font_others, fill=255)
     draw.text((0, 42), f"MEM:".ljust(7) + f"{memory_usage}%", font=font_others, fill=255)
-    draw.text((0, 54), f"HDD: ".ljust(7), font=font_others, fill=255)
+    draw.text((0, 54), f"HDD: ".ljust(5), font=font_others, fill=255)
 
 
     # TEST!!!!!!!!!!!!!
@@ -87,7 +87,7 @@ def update_display():
     # END OF TEST
 
     # Display the HDD usage percentage just behind the bar
-    draw.text((hdd_bar_x + hdd_bar_width + 2, hdd_bar_y), f"{hdd_usage}%", font=font_others, fill=1)
+    draw.text((hdd_bar_x + hdd_bar_width + 2, 54), f"{hdd_usage}%", font=font_others, fill=1)
 
 
 
