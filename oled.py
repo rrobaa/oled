@@ -2,6 +2,7 @@ import Adafruit_SSD1306
 import psutil
 from PIL import Image, ImageDraw, ImageFont
 from time import sleep
+import time
 import threading
 import subprocess
 
@@ -135,8 +136,6 @@ device_thread = threading.Thread(target=check_device_status)
 device_thread.daemon = True  # Set the thread as daemon to exit when the main program exits
 device_thread.start()
 
-
-
 def network_display():
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
     draw.text((0, 0), f"WAN: Internet {device_statuses['WAN']}", font=font_others, fill=255)
@@ -148,8 +147,33 @@ def network_display():
     disp.image(image)
     disp.display()
 
+
+
+# TEST FOR SPINNING RPI LOGO ON STARTUP
+def display_rotating_logo(duration=10):
+    logo = Image.open('rpi-logo.png')  # Replace with your logo file path
+    num_frames = 50
+    rotation_angle = 360 // num_frames
+
+    start_time = time.time()
+    while (time.time() - start_time) < duration:
+        for i in range(0, 360, rotation_angle):
+            draw.rectangle((0, 0, width, height), outline=0, fill=0)
+            rotated_logo = logo.rotate(i)
+            x = (width - rotated_logo.width) // 2
+            y = (height - rotated_logo.height) // 2
+            disp.image(image)
+            disp.display()
+            draw.bitmap((x, y), rotated_logo, fill=1)
+            disp.image(image)
+            disp.display()
+            sleep(0.1)
+
 # Continuously update the display every 2 seconds
 update_timer = 0
+
+display_rotating_logo()
+
 while True:
     if update_timer == 5: # Change to whats needed
         network_display()
