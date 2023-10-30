@@ -70,16 +70,12 @@ def update_display():
     draw.text((0, 18), f"CPU:".ljust(7) + f"{cpu_usage}%", font=font_others, fill=255)
     draw.text((0, 30), f"Temp:".ljust(7) + f"{get_cpu_temperature()} °C", font=font_others, fill=255)
     draw.text((0, 42), f"MEM:".ljust(7) + f"{memory_usage}%", font=font_others, fill=255)
-    draw.text((0, 54), f"HDD:".ljust(7) + f"{hdd_usage}%", font=font_others, fill=255)
+    draw.text((0, 54), f"HDD: ".ljust(7), font=font_others, fill=255)
 
 
     # TEST!!!!!!!!!!!!!
     # Draw a bar graph for HDD space
-<<<<<<< HEAD
-    hdd_bar_width = 30
-=======
     hdd_bar_width = 60
->>>>>>> f50ad93db88394401aebc11555eaaa1e50b39a9e
     hdd_bar_height = 8
     hdd_bar_x = 40
     hdd_bar_y = 54
@@ -89,6 +85,10 @@ def update_display():
     draw.rectangle((hdd_bar_x, hdd_bar_y, hdd_bar_x + hdd_bar_width, hdd_bar_y + hdd_bar_height), outline=1, fill=0)
     draw.rectangle((hdd_bar_x, hdd_bar_y, hdd_bar_x + used_space, hdd_bar_y + hdd_bar_height), outline=1, fill=1)
     # END OF TEST
+
+    # Display the HDD usage percentage just behind the bar
+    draw.text((hdd_bar_x + hdd_bar_width + 2, hdd_bar_y), f"{hdd_usage}%", font=font_others, fill=1)
+
 
 
     disp.image(image)
