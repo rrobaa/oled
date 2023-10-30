@@ -167,7 +167,7 @@ def display_rotating_logo(duration=10):
             draw.bitmap((x, y), rotated_logo, fill=1)
             disp.image(image)
             disp.display()
-            sleep(0.1)
+            sleep(0.03)
 
 # Continuously update the display every 2 seconds
 update_timer = 0
