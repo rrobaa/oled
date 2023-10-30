@@ -2,7 +2,7 @@ import Adafruit_SSD1306
 import psutil
 from PIL import Image, ImageDraw, ImageFont
 from time import sleep
-import time
+# import time
 import threading
 import subprocess
 
@@ -150,35 +150,35 @@ def network_display():
 
 
 # TEST FOR SPINNING RPI LOGO ON STARTUP
-def display_static_logo(duration=5):
-    logo = Image.open('rpi-logo.png').convert('1')  # Replace with your logo file path
+# def display_static_logo(duration=5):
+#     logo = Image.open('rpi-logo.png').convert('1')  # Replace with your logo file path
 
-    # Assuming you have these variables defined somewhere
-    width = 128  # Replace with the appropriate display width
-    height = 64  # Replace with the appropriate display height
-    image = Image.new('1', (width, height))
-    draw = ImageDraw.Draw(image)
+#     # Assuming you have these variables defined somewhere
+#     width = 128  # Replace with the appropriate display width
+#     height = 64  # Replace with the appropriate display height
+#     image = Image.new('1', (width, height))
+#     draw = ImageDraw.Draw(image)
 
-    # Calculate the position for the logo
-    x = (width - logo.width) // 2
-    y = (height - logo.height) // 2
+#     # Calculate the position for the logo
+#     x = (width - logo.width) // 2
+#     y = (height - logo.height) // 2
 
-    disp.image(image)
-    disp.display()
+#     disp.image(image)
+#     disp.display()
 
-    # Show the static logo for 5 seconds
-    start_time = time.time()
-    while (time.time() - start_time) < duration:
-        draw.rectangle((0, 0, width, height), outline=0, fill=0)
-        draw.bitmap((x, y), logo, fill=1)
-        disp.image(image)
-        disp.display()
-        time.sleep(0.1)  # Adjust sleep time if needed
+#     # Show the static logo for 5 seconds
+#     start_time = time.time()
+#     while (time.time() - start_time) < duration:
+#         draw.rectangle((0, 0, width, height), outline=0, fill=0)
+#         draw.bitmap((x, y), logo, fill=1)
+#         disp.image(image)
+#         disp.display()
+#         time.sleep(0.1)  # Adjust sleep time if needed
 
 # Continuously update the display every 2 seconds
 update_timer = 0
 
-display_static_logo()
+# display_static_logo()
 
 while True:
     if update_timer == 5: # Change to whats needed
