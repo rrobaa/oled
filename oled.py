@@ -119,12 +119,12 @@ def check_device_status():
         device_statuses["Switch"] = switch_ip if switch_status == 'UP' else 'DOWN'
 
         # Ping Access Point 01
-        ap01_ip = '192.168.1.3'
+        ap01_ip = '192.168.1.11'
         ap01_status = ping_device(ap01_ip)
         device_statuses["AP01"] = ap01_ip if ap01_status == 'UP' else 'DOWN'
 
         # Ping Access Point 02
-        ap02_ip = '192.168.1.4'
+        ap02_ip = '192.168.1.12'
         ap02_status = ping_device(ap02_ip)
         device_statuses["AP02"] = ap02_ip if ap02_status == 'UP' else 'DOWN'
 
