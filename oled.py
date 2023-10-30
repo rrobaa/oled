@@ -74,6 +74,47 @@ def update_display():
     disp.image(image)
     disp.display()
 
+# Start of ping sequens
+device_statuses = {
+    "WAN": "UNKNOWN",
+    "Router": "UNKNOWN",
+    "Switch": "UNKNOWN",
+    "AP01": "UNKNOWN",
+    "AP02": "UNKNOWN"
+}
+
+def ping_device(device):
+    result = subprocess.call(['ping', '-c', '1', device], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    return "UP" if result == 0 else "DOWN"
+
+def check_device_status():
+    while True:
+        # Ping WAN (Google's DNS)
+        wan_status = ping_device('8.8.8.8')
+        device_statuses["WAN"] = wan_status
+
+        # Ping Router, Switch, AP01, AP02 (Omitted for printing only WAN)
+
+        time.sleep(10)  # Wait for 10 seconds before pinging again
+
+# Create a thread for the device status checking
+device_thread = threading.Thread(target=check_device_status)
+device_thread.daemon = True  # Set the thread as daemon to exit when the main program exits
+device_thread.start()
+
+
+
+def network_display():
+    draw.rectangle((0, 0, width, height), outline=0, fill=0)
+    draw.text((0, 0), f"WAN: {device_statuses['WAN']}", font=font_ip, fill=255)
+    draw.text((0, 12), f"Router: {device_statuses['Router']}", font=font_others, fill=255)
+    draw.text((0, 24), f"Switch: {device_statuses['Switch']}", font=font_others, fill=255)
+    draw.text((0, 36), f"AP01: {device_statuses['AP01']}", font=font_others, fill=255)
+    draw.text((0, 48), f"AP02: {device_statuses['AP02']}", font=font_others, fill=255)
+
+    disp.image(image)
+    disp.display()
+
 
 
 
