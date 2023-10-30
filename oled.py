@@ -1,7 +1,7 @@
 import Adafruit_SSD1306
 import psutil
 from PIL import Image, ImageDraw, ImageFont
-import time
+from time import sleep
 import threading
 import subprocess
 
@@ -56,7 +56,7 @@ def update_stats():
         memory_usage = psutil.virtual_memory().percent
         hdd_usage = psutil.disk_usage('/').percent
 
-        time.sleep(2)  # Adjust the sleep duration to control how often stats are updated
+        sleep(2)  # Adjust the sleep duration to control how often stats are updated
 
 # Start the background thread to update system stats
 stats_thread = threading.Thread(target=update_stats)
@@ -72,24 +72,19 @@ def update_display():
     draw.text((0, 42), f"MEM:".ljust(7) + f"{memory_usage}%", font=font_others, fill=255)
     draw.text((0, 54), f"HDD: ".ljust(5), font=font_others, fill=255)
 
-
-    # TEST!!!!!!!!!!!!!
     # Draw a bar graph for HDD space
     hdd_bar_width = 50
     hdd_bar_height = 7
     hdd_bar_x = 40
-    hdd_bar_y = 56
+    hdd_bar_y = 56 # Added 2 so it looked better on screen
 
     # Calculate the width of the used portion of the bar
     used_space = int((hdd_bar_width * hdd_usage) / 100)
     draw.rectangle((hdd_bar_x, hdd_bar_y, hdd_bar_x + hdd_bar_width, hdd_bar_y + hdd_bar_height), outline=1, fill=0)
     draw.rectangle((hdd_bar_x, hdd_bar_y, hdd_bar_x + used_space, hdd_bar_y + hdd_bar_height), outline=1, fill=1)
-    # END OF TEST
 
     # Display the HDD usage percentage just behind the bar
-    draw.text((hdd_bar_x + hdd_bar_width + 2, 54), f"{hdd_usage}%", font=font_others, fill=1)
-
-
+    draw.text((hdd_bar_x + hdd_bar_width + 2, hdd_bar_y - 2), f"{hdd_usage}%", font=font_others, fill=1)
 
     disp.image(image)
     disp.display()
@@ -133,7 +128,7 @@ def check_device_status():
         ap02_status = ping_device(ap02_ip)
         device_statuses["AP02"] = ap02_ip if ap02_status == 'UP' else 'DOWN'
 
-        time.sleep(10)  # Wait for 10 seconds before pinging again
+        sleep(10)  # Wait for 10 seconds before pinging again
 
 # Create a thread for the device status checking
 device_thread = threading.Thread(target=check_device_status)
@@ -153,18 +148,13 @@ def network_display():
     disp.image(image)
     disp.display()
 
-
-
-
-
-
 # Continuously update the display every 2 seconds
 update_timer = 0
 while True:
     if update_timer == 5: # Change to whats needed
         network_display()
-        time.sleep(10)
+        sleep(10)
         update_timer = 0
     update_display()
-    time.sleep(2)
+    sleep(2)
     update_timer += 1
