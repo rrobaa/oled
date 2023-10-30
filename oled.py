@@ -5,7 +5,6 @@ import time
 import threading
 import subprocess
 
-
 # Initialize the SSD1306 display
 disp = Adafruit_SSD1306.SSD1306_128_64(rst=None)
 disp.begin()
@@ -91,19 +90,25 @@ devices = {
     "ap02": "192.168.1.4"
 }
 
-
 # Ping network
 def network_check():
-    for device, ip in devices.items():
-        status = check_device_status(ip)
-        device_statuses[device] = status
-    
-    wan = device_statuses.get("wan", "DOWN")
-    router = device_statuses.get("router", "DOWN")
-    switch = device_statuses.get("switch", "DOWN")
-    ap01 = device_statuses.get("ap01", "DOWN")
-    ap02 = device_statuses.get("ap02", "DOWN")
-    time.sleep(10)
+    while True:
+        for device, ip in devices.items():
+            status = check_device_status(ip)
+            device_statuses[device] = status
+        
+        global wan
+        global router
+        global switch
+        global ap01
+        global ap02
+
+        wan = device_statuses.get("wan", "DOWN")
+        router = device_statuses.get("router", "DOWN")
+        switch = device_statuses.get("switch", "DOWN")
+        ap01 = device_statuses.get("ap01", "DOWN")
+        ap02 = device_statuses.get("ap02", "DOWN")
+        time.sleep(10)
 
 # Start the background thread of pining network
 network_thread = threading.Thread(target=network_check)
@@ -142,12 +147,12 @@ def show_network_status():
 # Continuously update the display every 2 seconds
 update_timer = 0
 while True:
-#    if update_timer == 5: # Change to whats needed
-#        update = check_network()
-#        if update:
-#            show_network_status()
-#            time.sleep(10)
-#            update_timer = 0
+    if update_timer == 5: # Change to whats needed
+        update = check_network()
+        if update:
+            show_network_status()
+            time.sleep(10)
+            update_timer = 0
     update_display()
     time.sleep(2)
     update_timer += 1
