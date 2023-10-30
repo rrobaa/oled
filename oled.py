@@ -150,24 +150,30 @@ def network_display():
 
 
 # TEST FOR SPINNING RPI LOGO ON STARTUP
-def display_rotating_logo(duration=10):
-    logo = Image.open('rpi-logo.png').convert('1')   # Replace with your logo file path
-    num_frames = 50
-    rotation_angle = 360 // num_frames
+def display_static_logo(duration=5):
+    logo = Image.open('rpi-logo.png').convert('1')  # Replace with your logo file path
 
+    # Assuming you have these variables defined somewhere
+    width = 128  # Replace with the appropriate display width
+    height = 64  # Replace with the appropriate display height
+    image = Image.new('1', (width, height))
+    draw = ImageDraw.Draw(image)
+
+    # Calculate the position for the logo
+    x = (width - logo.width) // 2
+    y = (height - logo.height) // 2
+
+    disp.image(image)
+    disp.display()
+
+    # Show the static logo for 5 seconds
     start_time = time.time()
     while (time.time() - start_time) < duration:
-        for i in range(0, 360, rotation_angle):
-            draw.rectangle((0, 0, width, height), outline=0, fill=0)
-            rotated_logo = logo.rotate(i)
-            x = (width - rotated_logo.width) // 2
-            y = (height - rotated_logo.height) // 2
-            disp.image(image)
-            disp.display()
-            draw.bitmap((x, y), rotated_logo, fill=1)
-            disp.image(image)
-            disp.display()
-            # sleep(0.03)
+        draw.rectangle((0, 0, width, height), outline=0, fill=0)
+        draw.bitmap((x, y), logo, fill=1)
+        disp.image(image)
+        disp.display()
+        time.sleep(0.1)  # Adjust sleep time if needed
 
 # Continuously update the display every 2 seconds
 update_timer = 0
