@@ -75,7 +75,7 @@ def update_display():
 
     # TEST!!!!!!!!!!!!!
     # Draw a bar graph for HDD space
-    hdd_bar_width = 100
+    hdd_bar_width = 30
     hdd_bar_height = 8
     hdd_bar_x = 40
     hdd_bar_y = 54
