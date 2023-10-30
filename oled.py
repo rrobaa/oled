@@ -63,58 +63,6 @@ stats_thread.daemon = True
 stats_thread.start()
 
 
-# Global variables for networkcheck
-wan = ""
-router = ""
-switch = ""
-ap01 = ""
-ap02 = ""
-
-device_statuses = {}
-
-def check_device_status(device_ip):
-    # Use the 'ping' command with subprocess
-    process = subprocess.Popen(['ping', '-c', '1', device_ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, _ = process.communicate()
-
-    if process.returncode == 0:
-        return device_ip
-    else:
-        return "DOWN"
-
-devices = {
-    "wan": "8.8.8.8",
-    "router": "192.168.1.1",
-    "switch": "192.168.1.2",
-    "ap01": "192.168.1.3",
-    "ap02": "192.168.1.4"
-}
-
-# Ping network
-def network_check():
-    while True:
-        for device, ip in devices.items():
-            status = check_device_status(ip)
-            device_statuses[device] = status
-        
-        global wan
-        global router
-        global switch
-        global ap01
-        global ap02
-
-        wan = device_statuses.get("wan", "DOWN")
-        router = device_statuses.get("router", "DOWN")
-        switch = device_statuses.get("switch", "DOWN")
-        ap01 = device_statuses.get("ap01", "DOWN")
-        ap02 = device_statuses.get("ap02", "DOWN")
-        time.sleep(10)
-
-# Start the background thread of pining network
-network_thread = threading.Thread(target=network_check)
-network_thread.daemon = True
-network_thread.start()
-
 
 # Function to update display with live system stats
 def update_display():
@@ -128,19 +76,8 @@ def update_display():
     disp.image(image)
     disp.display()
 
-def check_network():
-    network_check()
-    return True
-
-def show_network_status():
-    draw.rectangle((0, 0, width, height), outline=0, fill=0)
-    draw.text((0, 0), f"WAN: {wan}", font=font_others, fill=255)
-    draw.text((0, 12), f"Router: {router}", font=font_others, fill=255)
 
 
-
-    disp.image(image)
-    disp.display()
 
 
 
@@ -148,11 +85,9 @@ def show_network_status():
 update_timer = 0
 while True:
     if update_timer == 5: # Change to whats needed
-        update = check_network()
-        if update:
-            show_network_status()
-            time.sleep(10)
-            update_timer = 0
+        print("Timer started")
+        time.sleep(10)
+        update_timer = 0
     update_display()
     time.sleep(2)
     update_timer += 1
