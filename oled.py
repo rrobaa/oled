@@ -62,8 +62,6 @@ stats_thread = threading.Thread(target=update_stats)
 stats_thread.daemon = True
 stats_thread.start()
 
-
-
 # Function to update display with live system stats
 def update_display():
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
