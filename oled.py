@@ -77,8 +77,8 @@ def update_display():
     # Draw a bar graph for HDD space
     hdd_bar_width = 50
     hdd_bar_height = 7
-    hdd_bar_x = 45
-    hdd_bar_y = 54
+    hdd_bar_x = 40
+    hdd_bar_y = 56
 
     # Calculate the width of the used portion of the bar
     used_space = int((hdd_bar_width * hdd_usage) / 100)
