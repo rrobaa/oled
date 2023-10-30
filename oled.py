@@ -93,7 +93,25 @@ def check_device_status():
         wan_status = ping_device('8.8.8.8')
         device_statuses["WAN"] = wan_status
 
-        # Ping Router, Switch, AP01, AP02 (Omitted for printing only WAN)
+        # Ping Router
+        router_ip = '192.168.1.1'
+        router_status = ping_device(router_ip)
+        device_statuses["Router"] = router_ip if router_status == 'UP' else 'DOWN'
+
+        # Ping Switch
+        switch_ip = '192.168.1.2'
+        switch_status = ping_device(switch_ip)
+        device_statuses["Switch"] = switch_ip if switch_status == 'UP' else 'DOWN'
+
+        # Ping Access Point 01
+        ap01_ip = '192.168.1.3'
+        ap01_status = ping_device(ap01_ip)
+        device_statuses["AP01"] = ap01_ip if ap01_status == 'UP' else 'DOWN'
+
+        # Ping Access Point 02
+        ap02_ip = '192.168.1.4'
+        ap02_status = ping_device(ap02_ip)
+        device_statuses["AP02"] = ap02_ip if ap02_status == 'UP' else 'DOWN'
 
         time.sleep(10)  # Wait for 10 seconds before pinging again
 
@@ -106,7 +124,7 @@ device_thread.start()
 
 def network_display():
     draw.rectangle((0, 0, width, height), outline=0, fill=0)
-    draw.text((0, 0), f"WAN: {device_statuses['WAN']}", font=font_ip, fill=255)
+    draw.text((0, 0), f"WAN: Internet {device_statuses['WAN']}", font=font_others, fill=255)
     draw.text((0, 12), f"Router: {device_statuses['Router']}", font=font_others, fill=255)
     draw.text((0, 24), f"Switch: {device_statuses['Switch']}", font=font_others, fill=255)
     draw.text((0, 36), f"AP01: {device_statuses['AP01']}", font=font_others, fill=255)
