@@ -55,6 +55,7 @@ def update_stats():
         cpu_usage = psutil.cpu_percent()
         memory_usage = psutil.virtual_memory().percent
         hdd_usage = psutil.disk_usage('/').percent
+
         time.sleep(2)  # Adjust the sleep duration to control how often stats are updated
 
 # Start the background thread to update system stats
@@ -70,6 +71,21 @@ def update_display():
     draw.text((0, 30), f"Temp:".ljust(7) + f"{get_cpu_temperature()} °C", font=font_others, fill=255)
     draw.text((0, 42), f"MEM:".ljust(7) + f"{memory_usage}%", font=font_others, fill=255)
     draw.text((0, 54), f"HDD:".ljust(7) + f"{hdd_usage}%", font=font_others, fill=255)
+
+
+    # TEST!!!!!!!!!!!!!
+    # Draw a bar graph for HDD space
+    hdd_bar_width = 100
+    hdd_bar_height = 8
+    hdd_bar_x = 40
+    hdd_bar_y = 54
+
+    # Calculate the width of the used portion of the bar
+    used_space = int((hdd_bar_width * hdd_usage) / 100)
+    draw.rectangle((hdd_bar_x, hdd_bar_y, hdd_bar_x + hdd_bar_width, hdd_bar_y + hdd_bar_height), outline=1, fill=0)
+    draw.rectangle((hdd_bar_x, hdd_bar_y, hdd_bar_x + used_space, hdd_bar_y + hdd_bar_height), outline=1, fill=1)
+    # END OF TEST
+
 
     disp.image(image)
     disp.display()
@@ -148,4 +164,3 @@ while True:
     update_display()
     time.sleep(2)
     update_timer += 1
-    print(update_timer)
