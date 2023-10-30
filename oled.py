@@ -124,7 +124,7 @@ def network_display():
 update_timer = 0
 while True:
     if update_timer == 5: # Change to whats needed
-        print("Timer started")
+        network_display()
         time.sleep(10)
         update_timer = 0
     update_display()
